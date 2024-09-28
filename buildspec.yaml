@@ -11,8 +11,8 @@ phases:
   post_build:
     commands:
       - docker push 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:$CODEBUILD_BUILD_NUMBER
-      - docker tag 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:$CODEBUILD_BUILD_NUMBER 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:latest
-      - docker push 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:latest
+      - docker tag 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:$CODEBUILD_BUILD_NUMBER 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:4
+      - docker push 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:4
 
 artifacts:
   files:
