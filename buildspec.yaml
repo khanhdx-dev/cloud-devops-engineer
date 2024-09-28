@@ -3,17 +3,16 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 875362910229.dkr.ecr.us-east-1.amazonaws.com
+      - echo Logging into ECR
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
-      - docker build -t coworking:$CODEBUILD_BUILD_NUMBER .
-      - docker tag coworking:$CODEBUILD_BUILD_NUMBER 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:$CODEBUILD_BUILD_NUMBER
+      - echo Starting build at `date`
+      - echo Building the Docker image...          
+      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER .
+      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER      
   post_build:
     commands:
-      - docker push 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:$CODEBUILD_BUILD_NUMBER
-      - docker tag 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:$CODEBUILD_BUILD_NUMBER 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:4
-      - docker push 875362910229.dkr.ecr.us-east-1.amazonaws.com/coworking:4
-
-artifacts:
-  files:
-    - '**/*'
+      - echo Completed build at `date`
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER
