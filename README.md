@@ -4,7 +4,7 @@ The app is available to access: http://a7253a18030a04d0eab92ce5cffa8e0c-17373054
 
 ## Getting Started
 
-
+ 
 ### Step 1. Create an EKS cluster
 ```bash
 eksctl create cluster --name project3-cluster --region us-east-1 --nodegroup-name project3-nodes --node-type t3.small --nodes 1 --nodes-min 1 --nodes-max 2
